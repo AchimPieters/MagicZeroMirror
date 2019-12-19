@@ -1,7 +1,0 @@
-{
-  "apps" : [{
-    "name"        : "Raspberry-MagicMirror",
-    "script"      : "~/Raspberry-MagicMirrorr/installers/startMagicMirrorPiZero.sh",
-    "watch"       : ["~/Raspberry-MagicMirror/config/config.js"]
-  }]
-}
