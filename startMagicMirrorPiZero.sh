@@ -20,7 +20,6 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer/. By Andrew Chu
-
 cd ~/MagicMirror;
 node serveronly &
 sleep 30;
