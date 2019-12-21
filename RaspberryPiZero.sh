@@ -20,11 +20,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer/. By Andrew Chu
-#!/usr/bin/env bash
-
-# This is an installer script for MagicMirror2. It works well enough
-# that it can detect if you have Node installed, run a binary script
-# and then download and run MagicMirror2.
+#
 echo -e "\e[0m"
 echo 'MagicMirror'
 echo -e "\e[0m"
