@@ -40,7 +40,7 @@ elif [ "$ARM" != "armv7l" ]; then
 fi
 
 # Define helper methods.
-function version_gt() { test "$(echo "$@" | tr " " "\n" | sort -V | head -n 1)" != "$1"; }
+function version_gt() { test "$echo "$@" | tr " " "\n" | sort -V | head -n 1" != "$1"; }
 function command_exists () { type "$1" &> /dev/null ;}
 
 # Update before first apt-get
