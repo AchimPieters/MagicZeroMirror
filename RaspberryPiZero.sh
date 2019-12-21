@@ -25,7 +25,9 @@
 # This is an installer script for MagicMirror2. It works well enough
 # that it can detect if you have Node installed, run a binary script
 # and then download and run MagicMirror2.
-
+echo -e "\e[0m"
+echo 'MagicMirror'
+echo -e "\e[0m"
 # Define the tested version of Node.js.
 NODE_TESTED="v5.1.0"
 

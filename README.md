@@ -11,7 +11,7 @@ Install the most recent available Raspbian Image (This is tested on Raspbian Jes
 
 Set up your Internet connection. You may also want to set up SSH and VNC at this time.
 
-### MagicMirror² Installation 
+### MagicMirror² Installation
 
 Clone this project into your home directory (It should come down into the folder ~/Raspberry-MagicMirror)
 
