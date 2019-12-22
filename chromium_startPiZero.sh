@@ -1,5 +1,5 @@
 #!/bin/sh
-#
+
 # Copyright 2019 Achim Pieters | StudioPieters®
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,5 +20,6 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer/. By Andrew Chu
+
 unclutter &
 chromium-browser --start-fullscreen --app http://localhost:8080
