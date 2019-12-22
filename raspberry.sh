@@ -19,7 +19,7 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-# Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer/. By Andrew Chu
+# Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer By Andrew Chu
 
 echo -e "\e[0m"
 echo 'MagicMirror Raspberry Pi Zero Installation'
@@ -124,7 +124,7 @@ if [ -d "$HOME/MagicMirror" ] ; then
 fi
 
 echo -e "\e[96mCloning MagicMirror ...\e[90m"
-if git clone --depth=1 https://github.com/MichMich/MagicMirror.git; then
+if git clone --recursive https://github.com/MichMich/MagicMirror.git; then
 	echo -e "\e[92mCloning MagicMirror Done!\e[0m"
 else
 	echo -e "\e[91mUnable to clone MagicMirror."
