@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright 2019 Achim Pieters | StudioPieters®
 #
@@ -19,7 +19,9 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-# Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer/. By Andrew Chu
+# Based on a work at https://github.com/ac2799/MagicMirrorPi0Installer By Andrew Chu
 
-unclutter &
-chromium-browser --start-fullscreen --app http://localhost:8080
+cd ~/MagicMirror;
+node serveronly &
+sleep 30;
+sh ~/MagicMirror/PiZero/chromium_startPi0.sh
