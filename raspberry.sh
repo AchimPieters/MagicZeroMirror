@@ -199,7 +199,7 @@ if [[ $choice =~ ^[Yy]$ ]]; then
 			sudo chmod a+x $HOME/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
 			sudo chmod a+x $HOME/MagicMirror/PiZero/chromium_startPiZero.sh;
 			sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME"
-    	pm2 start $HOME/MagicMirror/installers/pm2_MagicMirrorPiZero.json
+    	pm2 start $HOME/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json
     	pm2 save
 		echo " "
 		echo -e "\e[92mWe're ready! Restart your Pi Zero to start your MagicMirror. \e[0m"
