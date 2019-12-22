@@ -192,15 +192,15 @@ if [[ $choice =~ ^[Yy]$ ]]; then
 	sudo npm install -g pm2
 	if [ "$ARM" = "armv6l" ]; then
 		mkdir ~/MagicMirror/PiZero;
-sudo mv ~/Raspberry-MagicMirror/startMagicMirrorPiZero.sh ~/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
-sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorPiZero.json ~/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
-sudo mv ~/Raspberry-MagicMirror/chromium_startPiZero.sh ~/MagicMirror/PiZero/chromium_startPiZero.sh;
-sudo chmod a+x ~/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
-sudo chmod a+x ~/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
-sudo chmod a+x ~/MagicMirror/PiZero/chromium_startPiZero.sh;
-		sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME"
-    pm2 start ~/MagicMirror/installers/pm2_MagicMirrorPiZero.json
-    pm2 save
+			sudo mv ~/Raspberry-MagicMirror/startMagicMirrorPiZero.sh ~/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
+			sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorPiZero.json ~/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
+			sudo mv ~/Raspberry-MagicMirror/chromium_startPiZero.sh ~/MagicMirror/PiZero/chromium_startPiZero.sh;
+			sudo chmod a+x ~/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
+			sudo chmod a+x ~/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
+			sudo chmod a+x ~/MagicMirror/PiZero/chromium_startPiZero.sh;
+			sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME"
+    	pm2 start ~/MagicMirror/installers/pm2_MagicMirrorPiZero.json
+    	pm2 save
 		echo " "
 		echo -e "\e[92mWe're ready! Restart your Pi Zero to start your MagicMirror. \e[0m"
 	elif [ "$ARM" = "armv7l" ]; then
