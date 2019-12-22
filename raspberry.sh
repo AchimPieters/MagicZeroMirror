@@ -134,7 +134,7 @@ fi
 cd ~/MagicMirror  || exit
 echo -e "\e[96mInstalling dependencies ...\e[90m"
 if [ "$ARM" = "armv6l" ]; then
-	if npx npmc@latest install; then
+	if npm npmc@latest install; then
 		echo -e "\e[91mErrors while installing dependencies! (source command: npmc@latest install)"
 	fi
 	if npm install acorn@latest; then
@@ -191,21 +191,21 @@ read -p "Do you want use pm2 for auto starting of your MagicMirror (y/N)?" choic
 if [[ $choice =~ ^[Yy]$ ]]; then
 	sudo npm install -g pm2
 	if [ "$ARM" = "armv6l" ]; then
-		mkdir ~/MagicMirror/PiZero;
-			sudo mv ~/Raspberry-MagicMirror/startMagicMirrorPiZero.sh ~/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
-			sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorPiZero.json ~/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
-			sudo mv ~/Raspberry-MagicMirror/chromium_startPiZero.sh ~/MagicMirror/PiZero/chromium_startPiZero.sh;
-			sudo chmod a+x ~/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
-			sudo chmod a+x ~/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
-			sudo chmod a+x ~/MagicMirror/PiZero/chromium_startPiZero.sh;
+		mkdir $HOME/MagicMirror/PiZero;
+			sudo mv ~/Raspberry-MagicMirror/startMagicMirrorPiZero.sh $HOME/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
+			sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorPiZero.json $HOME/MagicMirrorPiZero/pm2_MagicMirrorPiZero.json;
+			sudo mv ~/Raspberry-MagicMirror/chromium_startPiZero.sh $HOME/MagicMirror/PiZero/chromium_startPiZero.sh;
+			sudo chmod a+x $HOME/MagicMirror/PiZero/startMagicMirrorPiZero.sh;
+			sudo chmod a+x $HOME/MagicMirror/PiZero/pm2_MagicMirrorPiZero.json;
+			sudo chmod a+x $HOME/MagicMirror/PiZero/chromium_startPiZero.sh;
 			sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME"
-    	pm2 start ~/MagicMirror/installers/pm2_MagicMirrorPiZero.json
+    	pm2 start $HOME/MagicMirror/installers/pm2_MagicMirrorPiZero.json
     	pm2 save
 		echo " "
 		echo -e "\e[92mWe're ready! Restart your Pi Zero to start your MagicMirror. \e[0m"
 	elif [ "$ARM" = "armv7l" ]; then
     sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME"
-    pm2 start ~/MagicMirror/installers/pm2_MagicMirror.json
+    pm2 start $HOME/MagicMirror/installers/pm2_MagicMirror.json
     pm2 save
 		echo " "
 		echo -e "\e[92mWe're ready! Run \e[1m\e[97mDISPLAY=:0 npm start\e[0m\e[92m from the ~/MagicMirror directory to start your MagicMirror.\e[0m"
