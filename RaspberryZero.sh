@@ -39,7 +39,7 @@ cd ~;
 sudo apt install git; sudo apt install unclutter;
 echo 'Cloning Magic Mirror'
 
-git clone https://github.com/MichMich/MagicMirror;
+git clone --recursive https://github.com/MichMich/MagicMirror;
 cd MagicMirror;
 echo 'Installing Magic Mirror Dependencies'
 npx npmc@latest install; npm install acorn@latest; npm install stylelint@latest; npm audit fix;
@@ -53,17 +53,18 @@ THEME_DIR="/usr/share/plymouth/themes"
 sudo mkdir $THEME_DIR/MagicMirror
 sudo cp ~/MagicMirror/splashscreen/splash.png $THEME_DIR/MagicMirror/splash.png && sudo cp ~/MagicMirror/splashscreen/MagicMirror.plymouth $THEME_DIR/MagicMirror/MagicMirror.plymouth && sudo cp ~/MagicMirror/splashscreen/MagicMirror.script $THEME_DIR/MagicMirror/MagicMirror.script;
 sudo plymouth-set-default-theme -R MagicMirror;
-mkdir ~/MagicMirror/PiZero;
-sudo mv ~/MagicMirrorPi0Installer/startMagicMirrorPi0.sh ~/MagicMirror/PiZero/startMagicMirrorPi0.sh;
-sudo mv ~/MagicMirrorPi0Installer/pm2_MagicMirrorPi0.json ~/MagicMirror/PiZero/pm2_MagicMirrorPi0.json;
-sudo mv ~/MagicMirrorPi0Installer/chromium_startPi0.sh ~/MagicMirror/PiZero/chromium_startPi0.sh;
-sudo chmod a+x ~/MagicMirror/PiZero/startMagicMirrorPi0.sh;
-sudo chmod a+x ~/MagicMirror/PiZero/pm2_MagicMirrorPi0.json;
-sudo chmod a+x ~/MagicMirror/PiZero/chromium_startPi0.sh;
+cd ~
+sudo mkdir ~/MagicMirror/PiZero;
+sudo mv ~/Raspberry-MagicMirror/startMagicMirrorZero.sh ~/MagicMirror/PiZero/startMagicMirrorZero.sh;
+sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorZero.json ~/MagicMirror/PiZero/pm2_MagicMirrorZero.json;
+sudo mv ~/Raspberry-MagicMirror/chromium_startZero.sh ~/MagicMirror/PiZero/chromium_startZero.sh;
+sudo chmod a+x ~/MagicMirror/PiZero/startMagicMirrorZero.sh;
+sudo chmod a+x ~/MagicMirror/PiZero/pm2_MagicMirrorZero.json;
+sudo chmod a+x ~/MagicMirror/PiZero/chromium_startZero.sh;
 
 # Use pm2 control like a service MagicMirror
 sudo npm install -g pm2;
 sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME";
-pm2 start ~/MagicMirror/PiZero/pm2_MagicMirrorPi0.json;
+pm2 start ~/MagicMirror/PiZero/pm2_MagicMirrorZero.json;
 pm2 save;
 echo 'Magic Mirror should begin shortly'
