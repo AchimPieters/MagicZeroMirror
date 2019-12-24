@@ -193,7 +193,7 @@ if [[ $choice =~ ^[Yy]$ ]]; then
 	if [ "$ARM" = "armv6l" ]; then
 		sudo mv ~/Raspberry-MagicMirror/startMagicMirrorZero.sh ~/MagicMirror/installers/startMagicMirrorZero.sh;
 		sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorZero.json ~/MagicMirror/installers/pm2_MagicMirrorZero.json;
-		sudo mv ~/Raspberry-MagicMirrorchromium_startZero.sh ~/MagicMirror/installers/chromium_startZero.sh;
+		sudo mv ~/Raspberry-MagicMirror/chromium_startZero.sh ~/MagicMirror/installers/chromium_startZero.sh;
 		sudo chmod a+x ~/MagicMirror/installers/startMagicMirrorZero.sh;
 		sudo chmod a+x ~/MagicMirror/installers/pm2_MagicMirrorZero.json;
 		sudo chmod a+x ~/MagicMirror/installers/chromium_startZero.sh;
