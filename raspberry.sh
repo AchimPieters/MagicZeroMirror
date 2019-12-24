@@ -134,20 +134,20 @@ fi
 cd ~/MagicMirror  || exit
 echo -e "\e[96mInstalling dependencies ...\e[90m"
 if [ "$ARM" = "armv6l" ]; then
-	if npx npmc@latest install; then
+	if sudo npx npmc@latest install; then
 		echo -e "\e[91mErrors while installing dependencies! (source command: npmc@latest install)"
 	fi
-	if npm install acorn@latest; then
+	if sudo npm install acorn@latest; then
 		echo -e "\e[91mErrors while installing dependencies! (source command: npm install acorn@latest)"
 	fi
-	if npm install stylelint@latest; then
-		echo -e "\e[91mErrors while installing dependencies! (source command: pm install stylelint@latest)"
+	if sudo npm install stylelint@latest; then
+		echo -e "\e[91mErrors while installing dependencies! (source command: npm install stylelint@latest)"
 	fi
-	if npm audit fix; then
+	if sudo npm audit fix; then
 		echo -e "\e[91mVulnerabilities may remain!"
 	fi
 elif [ "$ARM" = "armv7l" ]; then
-	if npm install; then
+	if sudo npm install; then
 		echo -e "\e[92mDependencies installation Done!\e[0m"
 	else
 		echo -e "\e[91mUnable to install dependencies!"
