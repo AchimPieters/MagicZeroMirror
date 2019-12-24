@@ -31,7 +31,7 @@ git clone https://github.com/AchimPieters/Raspberry-MagicMirror.git
 Run the command
 
 ```
-sudo chmod a+x ~/Raspberry-MagicMirror/raspberry.sh && sh ~/Raspberry-MagicMirror/raspberry.sh
+sudo chmod a+x ~/Raspberry-MagicMirror/raspberry.sh && bash ~/Raspberry-MagicMirror/raspberry.sh
 ```
 
 This will make the shell script executable, and if that is successful, it will also run the script.
