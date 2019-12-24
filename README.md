@@ -1,7 +1,3 @@
-# Raspberry-MagicMirror
-Raspberry – MagicMirror²
-
-
 # MagicMirror² 3.1.9 Installer for the Raspberry Pi Zero W
 
 This installer allows users of the Raspberry Pi Zero W to also access the popular MagicMirror² personal assistant project.
@@ -20,9 +16,9 @@ For More Information Visit http://www.studiopieters.nl
 
 
 
-[![GitHub All Releases](https://img.shields.io/github/downloads/achimpieters/Raspberry-MagicMirror/total?color=green)](https://github.com/achimpieters/Raspberry-MagicMirror/releases)
+
 [![GitHub license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hyperion-project/hyperion.ng/master/LICENSE)
-[![GitHub license](https://img.shields.io/github/v/release/achimpieters/Raspberry-MagicMirror)](https://img.shields.io/github/v/release/achimpieters/Raspberry-MagicMirror)
+
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://paypal.me/AJFPieters)
 
 
