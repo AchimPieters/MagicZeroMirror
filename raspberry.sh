@@ -1,28 +1,21 @@
 #!/usr/bin/env bash
 
-# Copyright 2019 Achim Pieters | StudioPieters®
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-#
-# Based on a work at https://github.com/ac2799/MagicMirrorpi0Installer By Andrew Chu
+# This is an installer script for MagicMirror2. It works well enough
+# that it can detect if you have Node installed, run a binary script
+# and then download and run MagicMirror2.
 
 echo -e "\e[0m"
-echo 'Installing MagicMirror'
+echo '$$\      $$\                     $$\           $$\      $$\ $$\                                          $$$$$$\'
+echo '$$$\    $$$ |                    \__|          $$$\    $$$ |\__|                                        $$  __$$\'
+echo '$$$$\  $$$$ | $$$$$$\   $$$$$$\  $$\  $$$$$$$\ $$$$\  $$$$ |$$\  $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\  \__/  $$ |'
+echo '$$\$$\$$ $$ | \____$$\ $$  __$$\ $$ |$$  _____|$$\$$\$$ $$ |$$ |$$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\  $$$$$$  |'
+echo '$$ \$$$  $$ | $$$$$$$ |$$ /  $$ |$$ |$$ /      $$ \$$$  $$ |$$ |$$ |  \__|$$ |  \__|$$ /  $$ |$$ |  \__|$$  ____/'
+echo '$$ |\$  /$$ |$$  __$$ |$$ |  $$ |$$ |$$ |      $$ |\$  /$$ |$$ |$$ |      $$ |      $$ |  $$ |$$ |      $$ |'
+echo '$$ | \_/ $$ |\$$$$$$$ |\$$$$$$$ |$$ |\$$$$$$$\ $$ | \_/ $$ |$$ |$$ |      $$ |      \$$$$$$  |$$ |      $$$$$$$$\'
+echo '\__|     \__| \_______| \____$$ |\__| \_______|\__|     \__|\__|\__|      \__|       \______/ \__|      \________|'
+echo '                       $$\   $$ |'
+echo '                       \$$$$$$  |'
+echo '                        \______/'
 echo -e "\e[0m"
 
 # Define the tested version of Node.js.
@@ -124,7 +117,10 @@ if [ -d "$HOME/MagicMirror" ] ; then
 fi
 
 echo -e "\e[96mCloning MagicMirror ...\e[90m"
+## if brought back into main repo
 if git clone --depth=1 https://github.com/MichMich/MagicMirror.git; then
+## if using from ac2799 repo
+#if git clone --depth=1 https://github.com/ac2799/MagicMirror.git; then
 	echo -e "\e[92mCloning MagicMirror Done!\e[0m"
 else
 	echo -e "\e[91mUnable to clone MagicMirror."
@@ -134,20 +130,20 @@ fi
 cd ~/MagicMirror  || exit
 echo -e "\e[96mInstalling dependencies ...\e[90m"
 if [ "$ARM" = "armv6l" ]; then
-	if sudo npx npmc@latest install; then
+	if npx npmc@latest install; then
 		echo -e "\e[91mErrors while installing dependencies! (source command: npmc@latest install)"
 	fi
-	if sudo npm install acorn@latest; then
+	if npm install acorn@latest; then
 		echo -e "\e[91mErrors while installing dependencies! (source command: npm install acorn@latest)"
 	fi
-	if sudo npm install stylelint@latest; then
-		echo -e "\e[91mErrors while installing dependencies! (source command: npm install stylelint@latest)"
+	if npm install stylelint@latest; then
+		echo -e "\e[91mErrors while installing dependencies! (source command: pm install stylelint@latest)"
 	fi
-	if sudo npm audit fix; then
+	if npm audit fix; then
 		echo -e "\e[91mVulnerabilities may remain!"
 	fi
 elif [ "$ARM" = "armv7l" ]; then
-	if sudo npm install; then
+	if npm install; then
 		echo -e "\e[92mDependencies installation Done!\e[0m"
 	else
 		echo -e "\e[91mUnable to install dependencies!"
@@ -191,14 +187,14 @@ read -p "Do you want use pm2 for auto starting of your MagicMirror (y/N)?" choic
 if [[ $choice =~ ^[Yy]$ ]]; then
 	sudo npm install -g pm2
 	if [ "$ARM" = "armv6l" ]; then
-		sudo mv ~/Raspberry-MagicMirror/startMagicMirrorZero.sh ~/MagicMirror/installers/startMagicMirrorZero.sh;
-		sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorZero.json ~/MagicMirror/installers/pm2_MagicMirrorZero.json;
-		sudo mv ~/Raspberry-MagicMirror/chromium_startZero.sh ~/MagicMirror/installers/chromium_startZero.sh;
-		sudo chmod a+x ~/MagicMirror/installers/startMagicMirrorZero.sh;
-		sudo chmod a+x ~/MagicMirror/installers/pm2_MagicMirrorZero.json;
-		sudo chmod a+x ~/MagicMirror/installers/chromium_startZero.sh;
+		sudo mv ~/Raspberry-MagicMirror/startMagicMirrorPi0.sh ~/MagicMirror/installers/startMagicMirrorPi0.sh;
+		sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorPi0.json ~/MagicMirror/installers/pm2_MagicMirrorPi0.json;
+		sudo mv ~/Raspberry-MagicMirror/chromium_startPi0.sh ~/MagicMirror/installers/chromium_startPi0.sh;
+		sudo chmod a+x ~/MagicMirror/installers/startMagicMirrorPi0.sh;
+		sudo chmod a+x ~/MagicMirror/installers/pm2_MagicMirrorPi0.json;
+		sudo chmod a+x ~/MagicMirror/installers/chromium_startPi0.sh;
 		sudo su -c "env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp $HOME"
-    pm2 start ~/MagicMirror/installers/pm2_MagicMirrorZero.json
+    pm2 start ~/MagicMirror/installers/pm2_MagicMirrorPi0.json
     pm2 save
 		echo " "
 		echo -e "\e[92mWe're ready! Restart your Pi Zero to start your MagicMirror. \e[0m"

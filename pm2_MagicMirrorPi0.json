@@ -1,7 +1,7 @@
 {
   "apps" : [{
     "name"        : "MagicMirror",
-    "script"      : "~/MagicMirror/installers/startMagicMirrorZero.sh",
+    "script"      : "~/MagicMirror/installers/startMagicMirrorPi0.sh",
     "watch"       : ["~/MagicMirror/config/config.js"]
   }]
 }
