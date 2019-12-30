@@ -5,17 +5,7 @@
 # and then download and run MagicMirror2.
 
 echo -e "\e[0m"
-echo '$$\      $$\                     $$\           $$\      $$\ $$\                                          $$$$$$\'
-echo '$$$\    $$$ |                    \__|          $$$\    $$$ |\__|                                        $$  __$$\'
-echo '$$$$\  $$$$ | $$$$$$\   $$$$$$\  $$\  $$$$$$$\ $$$$\  $$$$ |$$\  $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\  \__/  $$ |'
-echo '$$\$$\$$ $$ | \____$$\ $$  __$$\ $$ |$$  _____|$$\$$\$$ $$ |$$ |$$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\  $$$$$$  |'
-echo '$$ \$$$  $$ | $$$$$$$ |$$ /  $$ |$$ |$$ /      $$ \$$$  $$ |$$ |$$ |  \__|$$ |  \__|$$ /  $$ |$$ |  \__|$$  ____/'
-echo '$$ |\$  /$$ |$$  __$$ |$$ |  $$ |$$ |$$ |      $$ |\$  /$$ |$$ |$$ |      $$ |      $$ |  $$ |$$ |      $$ |'
-echo '$$ | \_/ $$ |\$$$$$$$ |\$$$$$$$ |$$ |\$$$$$$$\ $$ | \_/ $$ |$$ |$$ |      $$ |      \$$$$$$  |$$ |      $$$$$$$$\'
-echo '\__|     \__| \_______| \____$$ |\__| \_______|\__|     \__|\__|\__|      \__|       \______/ \__|      \________|'
-echo '                       $$\   $$ |'
-echo '                       \$$$$$$  |'
-echo '                        \______/'
+echo 'MagicMirror² 3.2.1 Installer for the Raspberry Pi Zero W'
 echo -e "\e[0m"
 
 # Define the tested version of Node.js.
@@ -118,9 +108,9 @@ fi
 
 echo -e "\e[96mCloning MagicMirror ...\e[90m"
 ## if brought back into main repo
-if git clone --depth=1 https://github.com/MichMich/MagicMirror.git; then
+#if git clone --depth=1 https://github.com/MichMich/MagicMirror.git; then
 ## if using from ac2799 repo
-#if git clone --depth=1 https://github.com/ac2799/MagicMirror.git; then
+if git clone --depth=1 https://github.com/AchimPieters/Raspberry-MagicMirror.git; then
 	echo -e "\e[92mCloning MagicMirror Done!\e[0m"
 else
 	echo -e "\e[91mUnable to clone MagicMirror."
@@ -137,7 +127,7 @@ if [ "$ARM" = "armv6l" ]; then
 		echo -e "\e[91mErrors while installing dependencies! (source command: npm install acorn@latest)"
 	fi
 	if npm install stylelint@latest; then
-		echo -e "\e[91mErrors while installing dependencies! (source command: pm install stylelint@latest)"
+		echo -e "\e[91mErrors while installing dependencies! (source command: npm install stylelint@latest)"
 	fi
 	if npm audit fix; then
 		echo -e "\e[91mVulnerabilities may remain!"
@@ -187,9 +177,6 @@ read -p "Do you want use pm2 for auto starting of your MagicMirror (y/N)?" choic
 if [[ $choice =~ ^[Yy]$ ]]; then
 	sudo npm install -g pm2
 	if [ "$ARM" = "armv6l" ]; then
-		sudo mv ~/Raspberry-MagicMirror/startMagicMirrorPi0.sh ~/MagicMirror/installers/startMagicMirrorPi0.sh;
-		sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirrorPi0.json ~/MagicMirror/installers/pm2_MagicMirrorPi0.json;
-		sudo mv ~/Raspberry-MagicMirror/chromium_startPi0.sh ~/MagicMirror/installers/chromium_startPi0.sh;
 		sudo chmod a+x ~/MagicMirror/installers/startMagicMirrorPi0.sh;
 		sudo chmod a+x ~/MagicMirror/installers/pm2_MagicMirrorPi0.json;
 		sudo chmod a+x ~/MagicMirror/installers/chromium_startPi0.sh;
