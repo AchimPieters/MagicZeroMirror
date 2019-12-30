@@ -25,7 +25,7 @@ For More Information Visit http://www.studiopieters.nl
 Clone this project into your home directory (It should come down into the folder ~/Raspberry-MagicMirror)
 
 ```
-git clone https://github.com/AchimPieters/Raspberry-MagicMirror.git
+bash -c "$(curl -sL 
 ```
 
 Run the command
