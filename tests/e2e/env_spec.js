@@ -1,7 +1,5 @@
 const helpers = require("./global-setup");
-const path = require("path");
 const request = require("request");
-
 const expect = require("chai").expect;
 
 const describe = global.describe;
@@ -36,7 +34,7 @@ describe("Electron app environment", function() {
 	it("should open a browserwindow", function() {
 		return app.client
 			.waitUntilWindowLoaded()
-			.browserWindow.focus()
+			// .browserWindow.focus()
 			.getWindowCount()
 			.should.eventually.equal(1)
 			.browserWindow.isMinimized()
