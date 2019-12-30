@@ -25,7 +25,7 @@ For More Information Visit http://www.studiopieters.nl
 Clone this project into your home directory (It should come down into the folder ~/Raspberry-MagicMirror)
 
 ```
-bash -c "$(curl -sL 
+bash -c "$(curl -sL https://raw.githubusercontent.com/AchimPieters/Raspberry-MagicMirror/master/installers/raspberry.sh)"
 ```
 
 Run the command
