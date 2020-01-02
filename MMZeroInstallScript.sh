@@ -38,7 +38,7 @@ sudo cp -R * /usr/local/;
 
 echo 'Installing Magic Mirror Dependencies'
 cd ~;
-sudo apt install npm -Y;
+sudo apt install npm -y;
 sudo apt install git;
 
 echo 'Cloning the latest version of Magic Mirror2'
@@ -47,11 +47,11 @@ git clone https://github.com/MichMich/MagicMirror;
 echo 'Installing Magic Mirror Dependencies'
 cd MagicMirror;
 npm install --arch=armv7l;
-sudo apt install chromium-browser -Y;
-sudo apt-get install xinit -Y;
-sudo apt install xorg -Y;
-sudo apt install matchbox -Y;
-sudo apt install unclutter -Y;
+sudo apt install chromium-browser -y;
+sudo apt-get install xinit -y;
+sudo apt install xorg -y;
+sudo apt install matchbox -y;
+sudo apt install unclutter -y;
 
 echo 'Loading default config'
 cp config/config.js.sample config/config.js;
