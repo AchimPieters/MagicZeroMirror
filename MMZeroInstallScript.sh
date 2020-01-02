@@ -38,7 +38,7 @@ sudo cp -R * /usr/local/;
 
 echo 'Installing Magic Mirror Dependencies'
 cd ~;
-sudo apt install npm;
+sudo apt install npm -Y;
 sudo apt install git;
 
 echo 'Cloning the latest version of Magic Mirror2'
