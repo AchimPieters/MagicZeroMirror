@@ -1,0 +1,64 @@
+#sudo apt install vim
+
+sudo wget https://nodejs.org/dist/v10.16.0/node-v10.16.0-linux-armv6l.tar.xz
+
+tar xvf node-v10.16.0-linux-armv6l.tar.xz
+
+cd node-v10.16.0-linux-armv6l
+sudo cp -R * /usr/local/
+#sudo reboot
+
+sudo apt install npm
+
+sudo apt install git
+
+Make sure root by CD
+
+git clone https://github.com/MichMich/MagicMirror
+
+cd MagicMirror
+
+npm install --arch=armv7l
+
+sudo apt install chromium-browser
+
+# sudo raspi-config
+# Boot Options -> B1 Desktop/CLI -> B2 Console Autologin
+
+sudo apt-get install xinit
+
+sudo apt install xorg
+
+sudo apt install matchbox
+
+sudo apt install unclutter
+
+sudo vim mmstart.sh  
+* #!/bin/bash cd ~/MagicMirror
+* node serveronly &
+* sleep 30
+* xinit /home/pi/chromium_start.sh
+
+Press esc then :wq and press enter
+
+sudo vim chromium_start.sh
+#!/bin/sh unclutter &
+xset -dpms # disable DPMS (Energy Star) features.
+xset s off # disable screen saver
+xset s noblank # don’t blank the video device
+matchbox-window-manager &
+chromium-browser –incognito –kiosk http://localhost:8080/
+
+Press esc then :wq and press enter
+
+sudo chmod a+x mmstart.sh
+
+sudo chmod a+x chromium_start.sh
+
+sudo npm install -g pm2
+
+pm2 startup
+
+pm2 start mmstart.sh
+
+http://localhost:8080
