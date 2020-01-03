@@ -66,12 +66,12 @@ echo 'Copy Magic Mirror2 startup scripts'
 cd ~;
 sudo mv ~/Raspberry-MagicMirror/mmstart.sh ~/mmstart.sh;
 sudo mv ~/Raspberry-MagicMirror/chromium_start.sh ~/chromium_start.sh;
-
 sudo chmod a+x mmstart.sh;
 sudo chmod a+x chromium_start.sh;
 
 
 echo 'Use pm2 control like a service MagicMirror'
+cd ~;
 sudo npm install -g pm2;
 pm2 startup;
 sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi;
