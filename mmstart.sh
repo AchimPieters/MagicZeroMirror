@@ -22,6 +22,6 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 cd ~/MagicMirror;
-node serveronly &
+node serveronly & 
 sleep 30;
-xinit /home/pi/chromium_start.sh
+sh ~/chromium_start.sh;
