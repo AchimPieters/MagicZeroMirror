@@ -24,4 +24,4 @@
 cd ~/MagicMirror;
 node serveronly &
 sleep 30;
-xinit ~/chromium_start.sh
+xinit /home/pi/chromium_start.sh

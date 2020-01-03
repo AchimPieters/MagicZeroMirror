@@ -74,7 +74,7 @@ sudo chmod a+x chromium_start.sh;
 echo 'Use pm2 control like a service MagicMirror'
 sudo npm install -g pm2;
 pm2 startup
-sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
+sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi
 pm2 start mmstart.sh
 pm2 save;
 echo 'Magic Mirror should begin shortly'

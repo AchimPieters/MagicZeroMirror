@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 unclutter &
 xset -dpms # disable DPMS (Energy Star) features.
 xset s off # disable screen saver
