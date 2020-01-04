@@ -66,9 +66,11 @@ echo 'Copy Magic Mirror2 startup scripts'
 cd ~;
 sudo mv ~/Raspberry-MagicMirror/mmstart.sh ~/mmstart.sh;
 sudo mv ~/Raspberry-MagicMirror/chromium_start.sh ~/chromium_start.sh;
+sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirror.json ~/pm2_MagicMirror.json;
+
 sudo chmod a+x mmstart.sh;
 sudo chmod a+x chromium_start.sh;
-
+sudo chmod a+x pm2_MagicMirror.json;
 
 echo 'Use pm2 control like a service MagicMirror'
 cd ~;
