@@ -22,6 +22,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 cd ~/MagicMirror;
+DISPLAY=:0 npm start
 node serveronly &
 sleep 30;
 sh ~/chromium_start.sh;

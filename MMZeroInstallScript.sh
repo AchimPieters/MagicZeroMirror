@@ -21,6 +21,9 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+echo 'Downloading MagicMirror Raspberry Pi Zero W installation files'
+git clone --recursive https://github.com/AchimPieters/Raspberry-MagicMirror.git
+
 echo 'Updating Pi'
 sudo apt-get update;
 
@@ -76,7 +79,7 @@ echo 'Use pm2 control like a service MagicMirror'
 cd ~;
 sudo npm install -g pm2;
 pm2 startup;
-sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi;
+sudo sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi;
 pm2 start pm2_MagicMirror.json;
 pm2 save;
 echo 'Magic Mirror should begin shortly'
