@@ -1,0 +1,7 @@
+{
+  "apps" : [{
+    "name"        : "MagicMirror",
+    "script"      : "~/mmstart.sh",
+    "watch"       : ["~/MagicMirror/config/config.js"]
+  }]
+}

@@ -75,6 +75,6 @@ cd ~;
 sudo npm install -g pm2;
 pm2 startup;
 sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u pi –hp /home/pi;
-pm2 start mmstart.sh;
+pm2 start pm2_MagicMirror.json;
 pm2 save;
 echo 'Magic Mirror should begin shortly'
