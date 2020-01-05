@@ -22,7 +22,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 echo 'Downloading MagicMirror Raspberry Pi Zero W installation files'
-git clone --recursive https://github.com/AchimPieters/Raspberry-MagicMirror.git
+git clone --recursive https://github.com/AchimPieters/MagicZeroMirror.git
 
 echo 'Updating Pi'
 sudo apt-get update;
@@ -67,9 +67,9 @@ sudo plymouth-set-default-theme -R MagicMirror;
 
 echo 'Copy Magic Mirror2 startup scripts'
 cd ~;
-sudo mv ~/Raspberry-MagicMirror/mmstart.sh ~/mmstart.sh;
-sudo mv ~/Raspberry-MagicMirror/chromium_start.sh ~/chromium_start.sh;
-sudo mv ~/Raspberry-MagicMirror/pm2_MagicMirror.json ~/pm2_MagicMirror.json;
+sudo mv ~/MagicZeroMirror/mmstart.sh ~/mmstart.sh;
+sudo mv ~/MagicZeroMirror/chromium_start.sh ~/chromium_start.sh;
+sudo mv ~/MagicZeroMirror/pm2_MagicMirror.json ~/pm2_MagicMirror.json;
 
 sudo chmod a+x mmstart.sh;
 sudo chmod a+x chromium_start.sh;
