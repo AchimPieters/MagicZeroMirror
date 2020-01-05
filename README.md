@@ -14,4 +14,4 @@ At first the MagicZeroMirror Install Script will clone the most recent available
 
 ## Further Documentation
 
-For More information see the wiki page or go to https://www.studiopieters.nl for more information.
+For More information see the [Wiki page](https://github.com/AchimPieters/MagicZeroMirror/wiki) or go to https://www.studiopieters.nl for more information.
