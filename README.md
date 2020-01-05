@@ -1,5 +1,5 @@
-![MagicMirrorZeroW](https://raw.githubusercontent.com/AchimPieters/MagicMirror/master/images/MagicMirror.png)
+![MagicMirrorZeroW](https://raw.githubusercontent.com/AchimPieters/MagicZeroMirror/master/images/MagicMirror.png)
 MagicMirror²
 
-bash -c "$(curl -sL https://raw.githubusercontent.com/AchimPieters/MagicMirror/master/MMZeroInstallScript.sh)"
+bash -c "$(curl -sL https://raw.githubusercontent.com/AchimPieters/MagicZeroMirror/master/MMZeroInstallScript.sh)"
 
