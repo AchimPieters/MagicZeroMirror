@@ -6,7 +6,7 @@ Paste this line in a Raspberry Pi Zero W Terminal prompt and press Enter.
 
 ###### ```bash -c "$(curl -sL https://raw.githubusercontent.com/AchimPieters/MagicZeroMirror/master/MMZeroInstallScript.sh)"```
 
-[![GitHub All Releases](https://img.shields.io/github/downloads/achimpieters/MagicZeroMirror/total?color=green)](https://github.com/achimpieters/MagicZeroMirror/releases) 
+
 [![GitHub license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hyperion-project/hyperion.ng/master/LICENSE)
 [![GitHub license](https://img.shields.io/github/v/release/achimpieters/MagicZeroMirror)](https://img.shields.io/github/v/release/achimpieters/MagicZeroMirror)
 [![Donate](https://img.shields.io/badge/donate-PayPal-blue.svg)](https://paypal.me/AJFPieters)
