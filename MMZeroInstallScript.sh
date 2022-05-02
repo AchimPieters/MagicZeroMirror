@@ -21,6 +21,10 @@
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+echo 'Making installation log'
+touch ~/install.log;
+echo 'Entering log mode.'
+scritp -a ~/install.log;
 echo 'Downloading MagicMirror Raspberry Pi Zero W installation files'
 git clone --recursive https://github.com/AchimPieters/MagicZeroMirror.git
 
@@ -83,3 +87,5 @@ sudo env PATH=$PATH:/usr/local/bin /usr/local/lib/node_modules/pm2/bin/pm2 start
 pm2 start pm2_MagicMirror.json;
 pm2 save;
 echo 'Magic Mirror should begin shortly'
+echo "Exiting log you can check log by 'cat ~/install.log'"
+exit;
