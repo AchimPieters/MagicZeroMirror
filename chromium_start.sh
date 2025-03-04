@@ -22,15 +22,15 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit if any command fails
+set -e  # Exit on failure
 
 echo "Starting unclutter to hide mouse cursor..."
 unclutter &
 
 echo "Disabling power management and screen blanking..."
-xset -dpms   # Disable DPMS (Energy Star) features
-xset s off   # Disable screen saver
-xset s noblank  # Prevent screen blanking
+xset -dpms   
+xset s off   
+xset s noblank  
 
 echo "Starting matchbox window manager..."
 matchbox-window-manager &
