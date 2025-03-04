@@ -22,7 +22,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit on any error
+set -e  # Exit on failure
 
 echo 'Downloading MagicMirror Raspberry Pi Zero W installation files'
 git clone --recursive https://github.com/AchimPieters/MagicZeroMirror.git || { echo "Failed to clone repository"; exit 1; }
@@ -65,7 +65,7 @@ sudo mv ~/MagicZeroMirror/{mmstart.sh,chromium_start.sh,pm2_MagicMirror.json} ~/
 sudo chmod +x ~/mmstart.sh ~/chromium_start.sh ~/pm2_MagicMirror.json
 
 echo 'Installing and setting up PM2 for auto-start...'
-sudo npm install -g pm2
+sudo npm install -g pm2 || { echo "PM2 installation failed!"; exit 1; }
 pm2 startup systemd -u pi --hp /home/pi
 pm2 start ~/pm2_MagicMirror.json
 pm2 save
