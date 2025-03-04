@@ -33,12 +33,12 @@ sudo apt-get update -y && sudo apt-get upgrade -y --fix-missing
 echo 'Installing dependencies...'
 sudo apt install -y npm git xinit xorg matchbox unclutter chromium-browser
 
-echo 'Downloading and installing Node.js (v18)'
-NODE_VERSION="v18.19.0"
+echo 'Downloading and installing Node.js (v20.18.1 for ARMv6)'
+NODE_VERSION="v20.18.1"
 NODE_ARCH="linux-armv6l"
 NODE_TAR="node-${NODE_VERSION}-${NODE_ARCH}.tar.xz"
 
-wget -q --show-progress "https://nodejs.org/dist/${NODE_VERSION}/${NODE_TAR}"
+wget -q --show-progress "https://unofficial-builds.nodejs.org/download/release/${NODE_VERSION}/${NODE_TAR}"
 tar xf ${NODE_TAR}
 sudo cp -R node-${NODE_VERSION}-${NODE_ARCH}/* /usr/local/
 rm -rf node-${NODE_VERSION}-${NODE_ARCH} ${NODE_TAR}
@@ -49,6 +49,9 @@ git clone https://github.com/MichMich/MagicMirror.git
 echo 'Installing MagicMirror dependencies...'
 cd MagicMirror
 npm install --arch=armv7l
+
+echo 'Installing Electron for ARMv6 (v25)...'
+npm install --arch=armv7l --platform=linux electron@25 --save-dev --unsafe-perm
 
 echo 'Loading default config...'
 cp config/config.js.sample config/config.js
@@ -65,7 +68,7 @@ sudo mv ~/MagicZeroMirror/{mmstart.sh,chromium_start.sh,pm2_MagicMirror.json} ~/
 sudo chmod +x ~/mmstart.sh ~/chromium_start.sh ~/pm2_MagicMirror.json
 
 echo 'Installing and setting up PM2 for auto-start...'
-sudo npm install -g pm2 || { echo "PM2 installation failed!"; exit 1; }
+sudo npm install -g pm2
 pm2 startup systemd -u pi --hp /home/pi
 pm2 start ~/pm2_MagicMirror.json
 pm2 save
