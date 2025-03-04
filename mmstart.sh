@@ -27,27 +27,20 @@ set -e  # Exit on failure
 echo "Starting MagicMirror..."
 cd ~/MagicMirror || { echo "MagicMirror directory not found!"; exit 1; }
 
-# Start MagicMirror UI
-DISPLAY=:0 /usr/bin/npm start &  
-sleep 10  
-
-echo "Starting MagicMirror server in headless mode..."
-if [ -f ~/MagicMirror/serveronly ]; then
-    node serveronly &
+# Start MagicMirror in Electron mode
+if [ -f ./node_modules/.bin/electron ]; then
+    DISPLAY=:0 ./node_modules/.bin/electron js/electron.js &
+    sleep 10
 else
-    echo "serveronly script not found!"
-    exit 1
+    # If Electron fails, fallback to serveronly mode
+    echo "Electron not found. Running MagicMirror in headless mode..."
+    node serveronly &
 fi
 
 echo "Waiting for MagicMirror to fully initialize..."
-sleep 30  
+sleep 30  # Adjust sleep time if necessary
 
 echo "Launching Chromium..."
-if [ -f ~/chromium_start.sh ]; then
-    sh ~/chromium_start.sh
-else
-    echo "chromium_start.sh not found!"
-    exit 1
-fi
+sh ~/chromium_start.sh || { echo "chromium_start.sh not found!"; exit 1; }
 
 echo "Setup complete. MagicMirror should now be running!"
