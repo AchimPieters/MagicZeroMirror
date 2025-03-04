@@ -22,6 +22,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+#!/bin/sh
 set -e  # Exit on failure
 
 echo "Starting unclutter to hide mouse cursor..."
@@ -33,9 +34,17 @@ xset s off
 xset s noblank  
 
 echo "Starting matchbox window manager..."
+if ! command -v matchbox-window-manager &> /dev/null; then
+    echo "matchbox-window-manager not found. Installing..."
+    sudo apt install -y matchbox
+fi
 matchbox-window-manager &
 
 echo "Launching Chromium in kiosk mode..."
+if ! command -v chromium-browser &> /dev/null; then
+    echo "Chromium browser not found. Installing..."
+    sudo apt install -y chromium-browser
+fi
 chromium-browser \
   --kiosk \
   --noerrdialogs \
