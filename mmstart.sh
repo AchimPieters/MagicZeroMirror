@@ -22,21 +22,32 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit immediately if a command fails
+set -e  # Exit on failure
 
 echo "Starting MagicMirror..."
 cd ~/MagicMirror || { echo "MagicMirror directory not found!"; exit 1; }
 
-DISPLAY=:0 npm start &  # Start MagicMirror in the background
-sleep 10  # Give it some time to initialize
+# Start MagicMirror UI
+DISPLAY=:0 /usr/bin/npm start &  
+sleep 10  
 
 echo "Starting MagicMirror server in headless mode..."
-node serveronly &
+if [ -f ~/MagicMirror/serveronly ]; then
+    node serveronly &
+else
+    echo "serveronly script not found!"
+    exit 1
+fi
 
 echo "Waiting for MagicMirror to fully initialize..."
-sleep 30  # Adjust sleep time if necessary
+sleep 30  
 
 echo "Launching Chromium..."
-sh ~/chromium_start.sh || { echo "chromium_start.sh not found!"; exit 1; }
+if [ -f ~/chromium_start.sh ]; then
+    sh ~/chromium_start.sh
+else
+    echo "chromium_start.sh not found!"
+    exit 1
+fi
 
 echo "Setup complete. MagicMirror should now be running!"
