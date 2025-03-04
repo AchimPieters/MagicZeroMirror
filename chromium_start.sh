@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright 2020 Achim Pieters | StudioPieters®
+# Copyright 2025 Achim Pieters | StudioPieters®
 #
 # More information on https://Studiopieters.nl
 #
@@ -16,14 +16,32 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NO NINFRINGEMENT. IN NO EVENT SHALL THE
+# FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 # WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+set -e  # Exit if any command fails
+
+echo "Starting unclutter to hide mouse cursor..."
 unclutter &
-xset -dpms # disable DPMS (Energy Star) features.
-xset s off # disable screen saver
-xset s noblank # don’t blank the video device
+
+echo "Disabling power management and screen blanking..."
+xset -dpms   # Disable DPMS (Energy Star) features
+xset s off   # Disable screen saver
+xset s noblank  # Prevent screen blanking
+
+echo "Starting matchbox window manager..."
 matchbox-window-manager &
-chromium-browser --start-fullscreen --app http://localhost:8080
+
+echo "Launching Chromium in kiosk mode..."
+chromium-browser \
+  --kiosk \
+  --noerrdialogs \
+  --disable-session-crashed-bubble \
+  --disable-infobars \
+  --incognito \
+  --app=http://localhost:8080 &
+
+echo "Setup complete. MagicMirror UI should now be visible."
