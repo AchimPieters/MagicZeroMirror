@@ -22,55 +22,37 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit on failure
-
-echo 'Downloading MagicMirror Raspberry Pi Zero W installation files'
-git clone --recursive https://github.com/AchimPieters/MagicZeroMirror.git || { echo "Failed to clone repository"; exit 1; }
+set -e  # Exit on error
 
 echo 'Updating Raspberry Pi...'
 sudo apt-get update -y && sudo apt-get upgrade -y --fix-missing
 
 echo 'Installing dependencies...'
-sudo apt install -y npm git xinit xorg matchbox unclutter chromium-browser
+sudo apt install -y npm git xinit xorg matchbox unclutter midori
 
-echo 'Downloading and installing Node.js (v20.18.1 for ARMv6)'
-NODE_VERSION="v20.18.1"
-NODE_ARCH="linux-armv6l"
-NODE_TAR="node-${NODE_VERSION}-${NODE_ARCH}.tar.xz"
+echo 'Cloning MagicMirror...'
+git clone https://github.com/MichMich/MagicMirror.git ~/MagicMirror || echo "MagicMirror already cloned."
 
-wget -q --show-progress "https://unofficial-builds.nodejs.org/download/release/${NODE_VERSION}/${NODE_TAR}"
-tar xf ${NODE_TAR}
-sudo cp -R node-${NODE_VERSION}-${NODE_ARCH}/* /usr/local/
-rm -rf node-${NODE_VERSION}-${NODE_ARCH} ${NODE_TAR}
-
-echo 'Cloning the latest version of MagicMirror...'
-git clone https://github.com/MichMich/MagicMirror.git
+cd ~/MagicMirror
 
 echo 'Installing MagicMirror dependencies...'
-cd MagicMirror
 npm install --arch=armv7l
 
-echo 'Installing Electron for ARMv6 (v25)...'
-npm install --arch=armv7l --platform=linux electron@25 --save-dev --unsafe-perm
-
-echo 'Loading default config...'
-cp config/config.js.sample config/config.js
-
-echo 'Setting MagicMirror splash screen...'
-THEME_DIR="/usr/share/plymouth/themes/MagicMirror"
-sudo mkdir -p ${THEME_DIR}
-sudo cp ~/MagicMirror/splashscreen/{splash.png,MagicMirror.plymouth,MagicMirror.script} ${THEME_DIR}/
-sudo plymouth-set-default-theme -R MagicMirror
+# Copy default config if missing
+if [ ! -f ~/MagicMirror/config/config.js ]; then
+  cp ~/MagicMirror/config/config.js.sample ~/MagicMirror/config/config.js
+fi
 
 echo 'Copying MagicMirror startup scripts...'
 cd ~
-sudo mv ~/MagicZeroMirror/{mmstart.sh,chromium_start.sh,pm2_MagicMirror.json} ~/
-sudo chmod +x ~/mmstart.sh ~/chromium_start.sh ~/pm2_MagicMirror.json
 
-echo 'Installing and setting up PM2 for auto-start...'
-sudo npm install -g pm2
-pm2 startup systemd -u pi --hp /home/pi
-pm2 start ~/pm2_MagicMirror.json
-pm2 save
+echo 'Creating midori_start.sh...'
+echo "#!/bin/bash
+midori -e Fullscreen -a http://localhost:8080 &" > ~/midori_start.sh
+chmod +x ~/midori_start.sh
 
-echo 'Installation complete. MagicMirror should start shortly!'
+echo 'Setting up MagicMirror to start on boot...'
+echo "@/home/pi/mmstart.sh" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
+chmod +x ~/mmstart.sh
+
+echo 'Setup complete! Reboot your Raspberry Pi to start MagicMirror.'
