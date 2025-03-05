@@ -22,25 +22,17 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit on failure
+set -e  # Exit on error
 
-echo "Starting MagicMirror..."
+echo "Starting MagicMirror in server mode..."
 cd ~/MagicMirror || { echo "MagicMirror directory not found!"; exit 1; }
 
-# Start MagicMirror in Electron mode
-if [ -f ./node_modules/.bin/electron ]; then
-    DISPLAY=:0 ./node_modules/.bin/electron js/electron.js &
-    sleep 10
-else
-    # If Electron fails, fallback to serveronly mode
-    echo "Electron not found. Running MagicMirror in headless mode..."
-    node serveronly &
-fi
+# Start MagicMirror in server mode
+node serveronly &
 
-echo "Waiting for MagicMirror to fully initialize..."
-sleep 30  # Adjust sleep time if necessary
+sleep 10  # Give MagicMirror some time to start
 
-echo "Launching Chromium..."
-sh ~/chromium_start.sh || { echo "chromium_start.sh not found!"; exit 1; }
+echo "Launching Midori browser..."
+sh ~/midori_start.sh || { echo "midori_start.sh not found!"; exit 1; }
 
-echo "Setup complete. MagicMirror should now be running!"
+echo "Setup complete. MagicMirror should now be visible!"
