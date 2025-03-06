@@ -44,8 +44,8 @@ sudo apt remove -y nodejs npm
 show_progress "Installing required dependencies..."
 sudo apt install -y curl git build-essential
 
-show_progress "Downloading and installing Node.js 20 for ARMv6 (community build)..."
-NODE_VERSION="20.9.0" # Update to latest stable ARMv6 build
+show_progress "Downloading and installing Node.js 20.18.1 for ARMv6 (community build)..."
+NODE_VERSION="20.18.1" # Compatible version for MagicMirror
 NODE_ARCH="armv6l"
 NODE_DISTRO="linux"
 
