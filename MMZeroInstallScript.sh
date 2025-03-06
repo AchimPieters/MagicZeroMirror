@@ -60,12 +60,6 @@ echo 'export PATH=~/nodejs/bin:$PATH' >> ~/.bashrc
 show_progress "Verifying Node.js and npm installation..."
 node -v && npm -v
 
-
-
-
-
-
-
 show_progress "Cloning MagicMirror repository if not present..."
 git clone https://github.com/MichMich/MagicMirror ~/MagicMirror || echo "MagicMirror already exists"
 @@ -67,14 +73,10 @@
