@@ -22,37 +22,48 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit on error
+# Update package list
+sudo apt update && sudo apt upgrade -y
 
-echo 'Updating Raspberry Pi...'
-sudo apt-get update -y && sudo apt-get upgrade -y --fix-missing
+# Remove existing Node.js versions if any
+sudo apt remove -y nodejs npm
 
-echo 'Installing dependencies...'
-sudo apt install -y npm git xinit xorg matchbox unclutter midori
+# Install required dependencies
+sudo apt install -y curl git build-essential
 
-echo 'Cloning MagicMirror...'
-git clone https://github.com/MichMich/MagicMirror.git ~/MagicMirror || echo "MagicMirror already cloned."
+# Download and install Node.js 20 for ARMv6 (community build)
+NODE_VERSION="20.9.0" # Update to latest stable ARMv6 build
+NODE_ARCH="armv6l"
+NODE_DISTRO="linux"
 
-cd ~/MagicMirror
-
-echo 'Installing MagicMirror dependencies...'
-npm install --arch=armv7l
-
-# Copy default config if missing
-if [ ! -f ~/MagicMirror/config/config.js ]; then
-  cp ~/MagicMirror/config/config.js.sample ~/MagicMirror/config/config.js
-fi
-
-echo 'Copying MagicMirror startup scripts...'
 cd ~
+curl -fsSL "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-$NODE_DISTRO-$NODE_ARCH.tar.xz" -o node.tar.xz
+mkdir -p ~/nodejs && tar -xJf node.tar.xz -C ~/nodejs --strip-components=1
 
-echo 'Creating midori_start.sh...'
-echo "#!/bin/bash
-midori -e Fullscreen -a http://localhost:8080 &" > ~/midori_start.sh
-chmod +x ~/midori_start.sh
+# Set environment variables for Node.js
+export PATH=~/nodejs/bin:$PATH
+echo 'export PATH=~/nodejs/bin:$PATH' >> ~/.bashrc
 
-echo 'Setting up MagicMirror to start on boot...'
-echo "@/home/pi/mmstart.sh" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
-chmod +x ~/mmstart.sh
+# Verify installation
+node -v
+npm -v
 
-echo 'Setup complete! Reboot your Raspberry Pi to start MagicMirror.'
+# Clone MagicMirror repository if not present
+git clone https://github.com/MichMich/MagicMirror ~/MagicMirror || echo "MagicMirror already exists"
+
+# Install MagicMirror dependencies
+cd ~/MagicMirror
+npm install --omit=dev
+
+# Setup PM2 process manager
+sudo npm install -g pm2
+pm install
+
+# Create PM2 startup script
+pm2 start ~/mmstart.sh --name "MagicMirror"
+pm2 save
+pm2 startup
+
+# Reboot system
+echo "Installation complete. Rebooting..."
+sudo reboot
