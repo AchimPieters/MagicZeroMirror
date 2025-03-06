@@ -72,7 +72,7 @@ node -v && npm -v
 # Clone MagicZeroMirror repository
 show_progress "Cloning MagicZeroMirror repository if not present..."
 if [ ! -d "/home/pi/MagicZeroMirror" ]; then
-    git clone https://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
+    git clone hMagicZeroMirrorttps://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
 else
     echo "MagicZeroMirror already exists, skipping clone."
 fi
@@ -96,7 +96,7 @@ npm install -g pm2 --unsafe-perm
 
 # Ensure PM2 is properly configured
 show_progress "Creating PM2 startup script..."
-pm2 start $HOME/mmstart.sh --name "MagicMirror"
+pm2 start $HOME/MagicZeroMirror/mmstart.sh --name "MagicMirror"
 pm2 save
 pm2 startup systemd
 sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp /home/pi
