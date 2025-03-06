@@ -54,24 +54,27 @@ curl -fsSL "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION
 mkdir -p ~/nodejs && tar -xJf node.tar.xz -C ~/nodejs --strip-components=1
 
 show_progress "Setting environment variables for Node.js..."
-echo 'export PATH=$HOME/nodejs/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
+export PATH=~/nodejs/bin:$PATH
+echo 'export PATH=~/nodejs/bin:$PATH' >> ~/.bashrc
 
 show_progress "Verifying Node.js and npm installation..."
-node -v
-npm -v
+node -v && npm -v
 
-show_progress "Setting up PM2 process manager..."
-npm install -g pm2
-pm2 startup
-pm2 save
+
+
+
+
+
 
 show_progress "Cloning MagicMirror repository if not present..."
 git clone https://github.com/MichMich/MagicMirror ~/MagicMirror || echo "MagicMirror already exists"
-
-show_progress "Installing MagicMirror dependencies..."
+@@ -67,14 +73,10 @@
 cd ~/MagicMirror
 npm install --omit=dev
+
+show_progress "Setting up PM2 process manager..."
+sudo npm install -g pm2
+npm install
 
 show_progress "Creating PM2 startup script..."
 pm2 start ~/mmstart.sh --name "MagicMirror"
