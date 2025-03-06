@@ -69,6 +69,14 @@ sudo ln -sf ~/nodejs/bin/npm /usr/bin/npm
 show_progress "Verifying Node.js and npm installation..."
 node -v && npm -v
 
+# Clone MagicZeroMirror repository
+show_progress "Cloning MagicZeroMirror repository if not present..."
+if [ ! -d "/home/pi/MagicZeroMirror" ]; then
+    git clone https://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
+else
+    echo "MagicZeroMirror already exists, skipping clone."
+fi
+
 # Clone MagicMirror repository
 show_progress "Cloning MagicMirror repository if not present..."
 if [ ! -d "$HOME/MagicMirror" ]; then
