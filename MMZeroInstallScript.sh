@@ -22,16 +22,30 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-# Update package list
+set -e  # Exit on error
+
+# Function to display progress with a progress bar
+show_progress() {
+    local message="$1"
+    local progress="$2"
+    echo -ne "\e[1;34m[INFO]\e[0m $message [$progress%]\r"
+    sleep 1
+    echo -e "\e[1;32m[✔]\e[0m $message"
+}
+
+# Enable debug mode for detailed logs
+set -x
+
+show_progress "Updating package list and upgrading..." 10
 sudo apt update && sudo apt upgrade -y
 
-# Remove existing Node.js versions if any
+show_progress "Removing existing Node.js versions..." 20
 sudo apt remove -y nodejs npm
 
-# Install required dependencies
+show_progress "Installing required dependencies..." 30
 sudo apt install -y curl git build-essential
 
-# Download and install Node.js 20 for ARMv6 (community build)
+show_progress "Downloading and installing Node.js 20 for ARMv6 (community build)..." 40
 NODE_VERSION="20.9.0" # Update to latest stable ARMv6 build
 NODE_ARCH="armv6l"
 NODE_DISTRO="linux"
@@ -40,30 +54,28 @@ cd ~
 curl -fsSL "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-$NODE_DISTRO-$NODE_ARCH.tar.xz" -o node.tar.xz
 mkdir -p ~/nodejs && tar -xJf node.tar.xz -C ~/nodejs --strip-components=1
 
-# Set environment variables for Node.js
+show_progress "Setting environment variables for Node.js..." 50
 export PATH=~/nodejs/bin:$PATH
 echo 'export PATH=~/nodejs/bin:$PATH' >> ~/.bashrc
 
-# Verify installation
-node -v
-npm -v
+show_progress "Verifying Node.js and npm installation..." 60
+node -v && npm -v
 
-# Clone MagicMirror repository if not present
+show_progress "Cloning MagicMirror repository if not present..." 70
 git clone https://github.com/MichMich/MagicMirror ~/MagicMirror || echo "MagicMirror already exists"
 
-# Install MagicMirror dependencies
+show_progress "Installing MagicMirror dependencies..." 80
 cd ~/MagicMirror
 npm install --omit=dev
 
-# Setup PM2 process manager
+show_progress "Setting up PM2 process manager..." 90
 sudo npm install -g pm2
-pm install
+npm install
 
-# Create PM2 startup script
+show_progress "Creating PM2 startup script..." 95
 pm2 start ~/mmstart.sh --name "MagicMirror"
 pm2 save
 pm2 startup
 
-# Reboot system
-echo "Installation complete. Rebooting..."
+show_progress "Installation complete. Rebooting system..." 100
 sudo reboot
