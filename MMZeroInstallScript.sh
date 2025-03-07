@@ -120,11 +120,9 @@ show_progress "Creating PM2 startup script..."
 pm2 start $HOME/MagicZeroMirror/mmstart.sh --name "MagicMirror"
 pm2 save
 
-# Use full path for PM2 startup and execute the command directly
-STARTUP_CMD=$(pm2 startup systemd -u pi --hp /home/pi | tail -n 1)
-eval "$STARTUP_CMD"
+# Use full path for PM2 startup
+sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp /home/pi
 
-# Final reboot with a short delay
-show_progress "Installation complete. Rebooting system in 5 seconds..."
-sleep 5
-sudo reboot now
+# Final reboot
+show_progress "Installation complete. Rebooting system..."
+sudo reboot
