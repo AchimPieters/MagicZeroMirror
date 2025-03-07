@@ -25,31 +25,21 @@
 set -e  # Exit on error
 set -x  # Enable debug mode for detailed logs
 
-# Ensure script is run with sudo or root privileges
-if [[ $EUID -ne 0 ]]; then
-    echo -e "\e[1;31m[ERROR]\e[0m This script must be run as root (or use sudo)." 
-    exit 1
-fi
-
 # Function to display progress
 show_progress() {
     local message="$1"
     echo -e "\e[1;34m[INFO]\e[0m $message"
     sleep 1
-    echo -e "\e[1;32m[\xE2\x9C\x94]\e[0m $message"
+    echo -e "\e[1;32m[✔]\e[0m $message"
 }
 
 # Update and upgrade system packages
 show_progress "Updating package list and upgrading..."
 sudo apt update && sudo apt upgrade -y
 
-# Check and remove old Node.js versions if they exist
-if command -v node &>/dev/null; then
-    show_progress "Removing existing Node.js versions..."
-    sudo apt remove -y nodejs npm
-else
-    show_progress "No existing Node.js found, skipping removal."
-fi
+# Remove old Node.js versions
+show_progress "Removing existing Node.js versions..."
+sudo apt remove -y nodejs npm
 
 # Install required dependencies
 show_progress "Installing required dependencies..."
@@ -62,35 +52,24 @@ NODE_ARCH="armv6l"
 NODE_DISTRO="linux"
 
 cd ~
-if ! curl -fsSL "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-$NODE_DISTRO-$NODE_ARCH.tar.xz" -o node.tar.xz; then
-    echo -e "\e[1;31m[ERROR]\e[0m Failed to download Node.js."
-    exit 1
-fi
-
+curl -fsSL "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-$NODE_DISTRO-$NODE_ARCH.tar.xz" -o node.tar.xz
 mkdir -p ~/nodejs && tar -xJf node.tar.xz -C ~/nodejs --strip-components=1
 
 # Set environment variables
 show_progress "Setting environment variables for Node.js..."
 export PATH=$HOME/nodejs/bin:$PATH
-if ! grep -q "export PATH=\$HOME/nodejs/bin:\$PATH" ~/.bashrc; then
-    echo 'export PATH=$HOME/nodejs/bin:$PATH' >> ~/.bashrc
-fi
-exec bash
+echo 'export PATH=$HOME/nodejs/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
 
 # Create system-wide links for Node.js & npm (so sudo can find them)
 sudo ln -sf ~/nodejs/bin/node /usr/bin/node
 sudo ln -sf ~/nodejs/bin/npm /usr/bin/npm
 
-# Verify Node.js installation
-if ! command -v node &>/dev/null; then
-    echo -e "\e[1;31m[ERROR]\e[0m Node.js installation failed."
-    exit 1
-fi
-show_progress "Node.js and npm installed successfully."
-echo "Node.js version: $(node -v)"
-echo "npm version: $(npm -v)"
+# Verify installation
+show_progress "Verifying Node.js and npm installation..."
+node -v && npm -v
 
-# Clone MagicZeroMirror repository if not present
+# Clone MagicZeroMirror repository
 show_progress "Cloning MagicZeroMirror repository if not present..."
 if [ ! -d "/home/pi/MagicZeroMirror" ]; then
     git clone https://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
@@ -98,7 +77,7 @@ else
     echo "MagicZeroMirror already exists, skipping clone."
 fi
 
-# Clone MagicMirror repository if not present
+# Clone MagicMirror repository
 show_progress "Cloning MagicMirror repository if not present..."
 if [ ! -d "$HOME/MagicMirror" ]; then
     git clone https://github.com/MichMich/MagicMirror ~/MagicMirror
@@ -111,7 +90,7 @@ show_progress "Installing MagicMirror dependencies..."
 cd ~/MagicMirror
 npm install --omit=dev
 
-# Install PM2 process manager
+# Install PM2 properly
 show_progress "Installing PM2 process manager..."
 npm install -g pm2 --unsafe-perm
 
@@ -119,8 +98,7 @@ npm install -g pm2 --unsafe-perm
 show_progress "Creating PM2 startup script..."
 pm2 start $HOME/MagicZeroMirror/mmstart.sh --name "MagicMirror"
 pm2 save
-
-# Use full path for PM2 startup
+pm2 startup systemd
 sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp /home/pi
 
 # Final reboot
