@@ -72,7 +72,7 @@ node -v && npm -v
 # Clone MagicZeroMirror repository
 show_progress "Cloning MagicZeroMirror repository if not present..."
 if [ ! -d "/home/pi/MagicZeroMirror" ]; then
-    git clone hMagicZeroMirrorttps://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
+    git clone https://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
 else
     echo "MagicZeroMirror already exists, skipping clone."
 fi
