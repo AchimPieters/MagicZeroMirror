@@ -22,17 +22,21 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e
+# midori_start.sh
+# Launches the Midori browser in fullscreen mode
+# to display MagicMirror served on localhost.
 
-echo "Starting unclutter to hide mouse cursor..."
-unclutter &
+# Disable screen blanking and screen saver
+xset -dpms
+xset s off
+xset s noblank
 
-echo "Disabling power management and screen blanking..."
-xset -dpms   # Disable power management
-xset s off   # Disable screen saver
-xset s noblank  # Prevent screen blanking
+# Hide the mouse pointer after a few seconds (if desired)
+# Uncomment if you have unclutter installed
+# unclutter &
 
-echo "Launching Midori in kiosk mode..."
-midori -e Fullscreen -a http://localhost:8080 &
+# Wait briefly to ensure the MagicMirror server is running
+sleep 10
 
-echo "MagicMirror UI should now be visible."
+# Launch Midori in fullscreen (kiosk-like) mode, pointing to localhost
+midori -e Fullscreen -a http://localhost:8080
