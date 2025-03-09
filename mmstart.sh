@@ -22,17 +22,10 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit on error
+#!/bin/bash
+# mmstart.sh
+# Start MagicMirror in server-only mode under Node
+# so we can display it via Midori separately.
 
-echo "Starting MagicMirror in server mode..."
-cd ~/MagicMirror || { echo "MagicMirror directory not found!"; exit 1; }
-
-# Start MagicMirror in server mode
-node serveronly &
-
-sleep 10  # Give MagicMirror some time to start
-
-echo "Launching Midori browser..."
-sh ~/midori_start.sh || { echo "midori_start.sh not found!"; exit 1; }
-
-echo "Setup complete. MagicMirror should now be visible!"
+cd /home/pi/MagicMirror
+DISPLAY=:0 npm run server
