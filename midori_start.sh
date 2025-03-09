@@ -40,3 +40,7 @@ sleep 10
 
 # Launch Midori in fullscreen (kiosk-like) mode, pointing to localhost
 midori -e Fullscreen -a http://localhost:8080
+
+/home/pi/.config/lxsession/LXDE-pi/autostart
+
+@/home/pi/midori_start.sh
