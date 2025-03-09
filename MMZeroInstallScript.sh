@@ -22,96 +22,42 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-set -e  # Exit on error
-set -x  # Enable debug mode for detailed logs
+# MMZeroInstallScript.sh
+# Installs MagicMirror, PM2, Midori, unclutter, etc. on a Pi Zero
+# running Raspberry Pi OS (Bookworm).
 
-# Function to display progress
-show_progress() {
-    local message="$1"
-    echo -e "\e[1;34m[INFO]\e[0m $message"
-    sleep 1
-    echo -e "\e[1;32m[✔]\e[0m $message"
-}
+# Update and upgrade system
+sudo apt-get update
+sudo apt-get -y upgrade
 
-# Update and upgrade system packages
-show_progress "Updating package list and upgrading..."
-sudo apt update && sudo apt upgrade -y
+# Install key packages
+sudo apt-get install -y \
+  git \
+  nodejs \
+  npm \
+  pm2 \
+  midori \
+  unclutter \
+  x11-xserver-utils
 
-# Ensure HDMI output is enabled for Raspberry Pi Zero W
-show_progress "Configuring HDMI output..."
-sudo sed -i 's/^#hdmi_force_hotplug=1/hdmi_force_hotplug=1/' /boot/config.txt
-sudo sed -i 's/^#hdmi_group=1/hdmi_group=2/' /boot/config.txt
-sudo sed -i 's/^#hdmi_mode=1/hdmi_mode=82/' /boot/config.txt
-echo "hdmi_force_hotplug=1" | sudo tee -a /boot/config.txt
+# Clone MagicMirror repository if not already cloned
+cd /home/pi
+git clone https://github.com/MichMich/MagicMirror
+cd /home/pi/MagicMirror
+npm install
 
-# Remove old Node.js versions
-show_progress "Removing existing Node.js versions..."
-sudo apt remove -y nodejs npm
+# Copy pm2_MagicMirror.json to home directory (adjust paths if needed)
+# e.g. if you already downloaded or placed the JSON somewhere:
+# cp /path/to/pm2_MagicMirror.json /home/pi/
+# Make sure it is in /home/pi/pm2_MagicMirror.json for the next steps
 
-# Install required dependencies
-show_progress "Installing required dependencies..."
-sudo apt install -y curl git build-essential xserver-xorg xinit unclutter chromium-browser 
+# Ensure your scripts are executable
+chmod +x /home/pi/mmstart.sh
+chmod +x /home/pi/midori_start.sh
 
-# Install Node.js (Community Build for ARMv6)
-show_progress "Downloading and installing Node.js 20.18.1..."
-NODE_VERSION="20.18.1"
-NODE_ARCH="armv6l"
-NODE_DISTRO="linux"
-
-cd ~
-curl -fsSL "https://unofficial-builds.nodejs.org/download/release/v$NODE_VERSION/node-v$NODE_VERSION-$NODE_DISTRO-$NODE_ARCH.tar.xz" -o node.tar.xz
-mkdir -p ~/nodejs && tar -xJf node.tar.xz -C ~/nodejs --strip-components=1
-
-# Set environment variables
-show_progress "Setting environment variables for Node.js..."
-export PATH=$HOME/nodejs/bin:$PATH
-echo 'export PATH=$HOME/nodejs/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
-
-# Create system-wide links for Node.js & npm (so sudo can find them)
-sudo ln -sf ~/nodejs/bin/node /usr/bin/node
-sudo ln -sf ~/nodejs/bin/npm /usr/bin/npm
-
-# Verify installation
-show_progress "Verifying Node.js and npm installation..."
-node -v && npm -v
-
-# Clone MagicZeroMirror repository
-show_progress "Cloning MagicZeroMirror repository if not present..."
-if [ ! -d "/home/pi/MagicZeroMirror" ]; then
-    git clone https://github.com/AchimPieters/MagicZeroMirror /home/pi/MagicZeroMirror
-else
-    echo "MagicZeroMirror already exists, skipping clone."
-fi
-
-# Clone MagicMirror repository
-show_progress "Cloning MagicMirror repository if not present..."
-if [ ! -d "$HOME/MagicMirror" ]; then
-    git clone https://github.com/MichMich/MagicMirror ~/MagicMirror
-else
-    echo "MagicMirror already exists, skipping clone."
-fi
-
-# Install MagicMirror dependencies
-show_progress "Installing MagicMirror dependencies..."
-cd ~/MagicMirror
-npm install --omit=dev
-
-# Install PM2 properly
-show_progress "Installing PM2 process manager..."
-npm install -g pm2 --unsafe-perm
-
-# Ensure PM2 is properly configured
-show_progress "Creating PM2 startup script..."
-pm2 start /home/pi/MagicZeroMirror/mmstart.sh --name "MagicMirror"
+# Set up PM2 to run MagicMirror on boot
+pm2 startup systemd -u pi --hp /home/pi
+pm2 start /home/pi/pm2_MagicMirror.json
 pm2 save
-pm2 startup systemd
-sudo env PATH=$PATH:/usr/bin pm2 startup systemd -u pi --hp /home/pi
 
-# Set up autostart for Magic Mirror
-show_progress "Setting up autostart for Magic Mirror..."
-echo "@xinit /home/pi/MagicZeroMirror/mmstart.sh" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
-
-# Final reboot
-show_progress "Installation complete. Rebooting system..."
-sudo reboot
+echo "Installation complete. Reboot to start MagicMirror via PM2 and Midori."
